@@ -1,0 +1,29 @@
+<div class="task-list">
+  <h1>Tasks</h1>
+  <button mat-raised-button color="primary" routerLink="/tasks/add">Add Task</button>
+  <mat-table [dataSource]="tasks" class="mat-elevation-z8">
+    <!-- Task Title Column -->
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+      <mat-cell *matCellDef="let task"> {{task.title}} </mat-cell>
+    </ng-container>
+
+    <!-- Task Description Column -->
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+      <mat-cell *matCellDef="let task"> {{task.description}} </mat-cell>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+      <mat-cell *matCellDef="let task">
+        <button mat-button color="accent" [routerLink]="['/tasks', task.id]">View</button>
+        <button mat-button color="warn" (click)="deleteTask(task.id)">Delete</button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
