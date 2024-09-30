@@ -1,0 +1,39 @@
+<div class="message-container">
+  <div class="message-header">
+    <strong>{{ message.author }}</strong> 
+    <span class="timestamp">{{ message.timestamp | date: 'shortTime' }}</span>
+  </div>
+
+  <div class="message-content">
+    <p>{{ message.text }} <small *ngIf="message.edited">(edited)</small></p>
+  </div>
+
+  <div class="message-actions">
+    <button (click)="enableEdit()">Edit</button>
+    <button (click)="delete()">Delete</button>
+    <button (click)="react('like')">👍 {{ message.reactions['like'] }}</button>
+    <button (click)="react('love')">❤️ {{ message.reactions['love'] }}</button>
+    <button (click)="toggleReply()">Reply</button>
+  </div>
+
+  <div *ngIf="isEditing" class="edit-message">
+    <textarea [(ngModel)]="editText"></textarea>
+    <button (click)="saveEdit()">Save</button>
+  </div>
+
+  <div *ngIf="isReplying" class="reply-message">
+    <textarea [(ngModel)]="replyText" placeholder="Reply"></textarea>
+    <button (click)="sendReply()">Send</button>
+  </div>
+
+  <div class="replies" *ngIf="message.replies.length > 0">
+    <app-message
+      *ngFor="let reply of message.replies"
+      [message]="reply"
+      (onEditMessage)="onEditMessage.emit($event)"
+      (onDeleteMessage)="onDeleteMessage.emit($event)"
+      (onReactToMessage)="onReactToMessage.emit($event)"
+      (onReplyToMessage)="onReplyToMessage.emit($event)"
+    ></app-message>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="chat-container">
+  <!-- Chat Messages Section -->
+  <div class="messages">
+    <app-message
+      *ngFor="let message of messages"
+      [message]="message"
+      (onEditMessage)="editMessage($event)"
+      (onDeleteMessage)="deleteMessage($event)"
+      (onReactToMessage)="reactToMessage($event)"
+      (onReplyToMessage)="replyToMessage($event)"
+    ></app-message>
+  </div>
+
+  <!-- Message Input Section -->
+  <div class="message-input-container">
+    <textarea [(ngModel)]="newMessage" placeholder="Type a message"></textarea>
+    <button class="send-button" (click)="sendMessage()">Send</button>
+  </div>
+</div>
